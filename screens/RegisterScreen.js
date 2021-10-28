@@ -29,7 +29,7 @@ export default function RegisterScreen() {
             />
             <Button
                 title="Login"
-                onPress={() => console.log(login + ' ' + password)}
+                onPress={}
             />
         </View>
     );
