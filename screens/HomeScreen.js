@@ -9,7 +9,7 @@ const Tab = createBottomTabNavigator();
 
 function MyTabs() {
 	return (
-		<Tab.Navigator>
+		<Tab.Navigator screenOptions={{headerShown: false}}>
 			<Tab.Screen name='Match' component={MatchScreen} />
 			<Tab.Screen name='Chats' component={ChatsScreen} />
 		</Tab.Navigator>
