@@ -4,7 +4,11 @@ import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import SplashScreen from './screens/HomeScreen';
 import { AuthContext } from './components/context';
-import SecureStore from 'expo-secure-store';
+import * as SecureStore from 'expo-secure-store';
+import path from './components/Path';
+
+const axios = require('axios').default;
+axios.defaults.baseURL = path();
 
 export default function App() {
 	const [state, dispatch] = useReducer(
@@ -40,19 +44,45 @@ export default function App() {
 	const authContext = useMemo(
 		() => ({
 			signIn: async (data) => {
+				let token = null;
+				
 				// send some data to server and get token
-				// handle sign in errors
+				try {
+					const res = await axios.post('api/login', {
+						email: data.login,
+						password: data.password,
+					});
+					if (res.data.error) return; // if response has an error message, return
+					token = res.data.accessToken;
+				} catch (err) {
+					console.log(err);
+					return;
+				}
+				
 				// persist the token using secure store
+				try {
+					await SecureStore.setItemAsync('userToken', token);
+				} catch (err) {
+					console.log(err);
+					return;
+				}
 
 				dispatch({
 					type: 'SIGN_IN',
-					token: 'sample_token',
+					token: token,
 				});
 			},
-			signOut: () =>
+			signOut: () => {
+				try {
+					SecureStore.deleteItemAsync('userToken');
+				} catch (err) {
+					console.log(err);
+				}
+
 				dispatch({
 					type: 'SIGN_OUT',
-				}),
+				})
+			},
 			signUp: async (data) => {
 				// send user data to server and get token
 				// handle errors
@@ -73,8 +103,9 @@ export default function App() {
 
 			try {
 				userToken = await SecureStore.getItemAsync('userToken');
-			} catch (e) {
+			} catch (err) {
 				// handle failure to restore token
+				console.log(err);
 			}
 
 			// may need to validate token
