@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
 import MatchScreen from './MatchScreen';
-import MessagesScreen from './MessagesScreen';
+import ProfileScreen from './ProfileScreen';
 import MessageStack from '../routes/MessageStack'
 
 const Tab = createBottomTabNavigator();
@@ -13,6 +13,7 @@ function MyTabs() {
 		<Tab.Navigator screenOptions={{ headerShown: false }}>
 			<Tab.Screen name='Match' component={MatchScreen} />
 			<Tab.Screen name='Chats' component={MessageStack} />
+			<Tab.Screen name='Profile' component={ProfileScreen} />
 		</Tab.Navigator>
 	);
 }
