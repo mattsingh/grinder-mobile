@@ -1,6 +1,13 @@
 import React, { useState, useContext } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+	StyleSheet,
+	Text,
+	TextInput,
+	View,
+	TouchableOpacity,
+} from 'react-native';
 import { AuthContext } from '../components/context';
+import AppStyles from '../assets/styles/AppStyles';
 
 export default function LoginScreen() {
 	const [login, setLogin] = useState(null);
@@ -10,29 +17,43 @@ export default function LoginScreen() {
 
 	return (
 		<View style={styles.container}>
-			<View style={styles.card}>
-				<Text style={styles.title}>Login</Text>
-				<Text>Please enter account information</Text>
+			<View style={AppStyles.loginCard}>
+				<Text style={AppStyles.loginPageText}>Please sign in</Text>
 				<TextInput
-					style={styles.input}
+					style={AppStyles.loginPageInputs}
 					onChangeText={setLogin}
 					value={login}
 					placeholder='Username or Email'
+					placeholderTextColor='#757575'
 				/>
 				<TextInput
-					style={styles.input}
+					style={AppStyles.loginPageInputs}
 					onChangeText={setPassword}
 					value={password}
 					secureTextEntry
 					placeholder='Password'
+					placeholderTextColor='#757575'
 				/>
-				<Button
+				<TouchableOpacity
 					title='Login'
+					style={AppStyles.loginPageButtons}
 					onPress={() => {
 						console.log(login + ' ' + password);
 						signIn({ login, password });
 					}}
-				/>
+				>
+					<Text style={AppStyles.loginPageText}>Login</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					title='Login'
+					style={AppStyles.loginPageButtons}
+					onPress={() => {
+						console.log(login + ' ' + password);
+						signIn({ login, password });
+					}}
+				>
+					<Text style={AppStyles.loginPageText}>Register</Text>
+				</TouchableOpacity>
 			</View>
 		</View>
 	);
@@ -43,6 +64,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
+		backgroundColor: '#a56fe7',
 	},
 	card: {
 		flexBasis: 'auto',
