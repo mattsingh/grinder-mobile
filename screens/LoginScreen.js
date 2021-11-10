@@ -7,54 +7,46 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 import { AuthContext } from '../components/context';
-import AppStyles from '../assets/styles/AppStyles';
+import {
+	FormCard,
+	FormInput,
+	FormButton,
+	FormText,
+} from '../components/FormComponents';
 
-export default function LoginScreen() {
-	const [login, setLogin] = useState(null);
+export default function LoginScreen({ navigation }) {
+	const [email, setEmail] = useState(null);
 	const [password, setPassword] = useState(null);
 
 	const { signIn } = useContext(AuthContext);
 
 	return (
 		<View style={styles.container}>
-			<View style={AppStyles.loginCard}>
-				<Text style={AppStyles.loginPageText}>Please sign in</Text>
-				<TextInput
-					style={AppStyles.loginPageInputs}
-					onChangeText={setLogin}
-					value={login}
-					placeholder='Username or Email'
-					placeholderTextColor='#757575'
+			<FormCard>
+				<FormText text='Please sign in' />
+				<FormInput
+					placeholder='Email'
+					onChangeText={setEmail}
+					value={email}
 				/>
-				<TextInput
-					style={AppStyles.loginPageInputs}
+				<FormInput
+					placeholder='Password'
 					onChangeText={setPassword}
 					value={password}
-					secureTextEntry
-					placeholder='Password'
-					placeholderTextColor='#757575'
 				/>
-				<TouchableOpacity
-					title='Login'
-					style={AppStyles.loginPageButtons}
+				<FormButton
+					buttonTitle='Login'
 					onPress={() => {
-						console.log(login + ' ' + password);
-						signIn({ login, password });
+						console.log(email + ' ' + password);
+						signIn({ email, password });
 					}}
-				>
-					<Text style={AppStyles.loginPageText}>Login</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					title='Login'
-					style={AppStyles.loginPageButtons}
-					onPress={() => {
-						console.log(login + ' ' + password);
-						signIn({ login, password });
-					}}
-				>
-					<Text style={AppStyles.loginPageText}>Register</Text>
-				</TouchableOpacity>
-			</View>
+				/>
+				<FormButton
+					buttonTitle='Register'
+					onPress={() => navigation.navigate('Register')}
+
+				/>
+			</FormCard>
 		</View>
 	);
 }
