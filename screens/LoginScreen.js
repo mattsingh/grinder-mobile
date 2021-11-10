@@ -9,8 +9,8 @@ import {
 import { AuthContext } from '../components/context';
 import AppStyles from '../assets/styles/AppStyles';
 
-export default function LoginScreen() {
-	const [login, setLogin] = useState(null);
+export default function LoginScreen({ navigation }) {
+	const [email, setEmail] = useState(null);
 	const [password, setPassword] = useState(null);
 
 	const { signIn } = useContext(AuthContext);
@@ -21,9 +21,9 @@ export default function LoginScreen() {
 				<Text style={AppStyles.loginPageText}>Please sign in</Text>
 				<TextInput
 					style={AppStyles.loginPageInputs}
-					onChangeText={setLogin}
-					value={login}
-					placeholder='Username or Email'
+					onChangeText={setEmail}
+					value={email}
+					placeholder='Email'
 					placeholderTextColor='#757575'
 				/>
 				<TextInput
@@ -38,19 +38,16 @@ export default function LoginScreen() {
 					title='Login'
 					style={AppStyles.loginPageButtons}
 					onPress={() => {
-						console.log(login + ' ' + password);
-						signIn({ login, password });
+						console.log(email + ' ' + password);
+						signIn({ email, password });
 					}}
 				>
 					<Text style={AppStyles.loginPageText}>Login</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
-					title='Login'
+					title='Register'
 					style={AppStyles.loginPageButtons}
-					onPress={() => {
-						console.log(login + ' ' + password);
-						signIn({ login, password });
-					}}
+					onPress={() => navigation.navigate('Register')}
 				>
 					<Text style={AppStyles.loginPageText}>Register</Text>
 				</TouchableOpacity>

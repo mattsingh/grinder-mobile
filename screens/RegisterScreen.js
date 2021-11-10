@@ -1,36 +1,51 @@
-import { View } from "react-native";
+import React, { useState, useContext } from 'react';
+import {
+	StyleSheet,
+	Text,
+	TextInput,
+	View,
+	TouchableOpacity,
+} from 'react-native';
 
 export default function RegisterScreen() {
+    const [firstName, setFirstName] = useState(null)
+    const [email, setEmail] = useState(null);
+	const [password, setPassword] = useState(null);
+	const [confirmPassword, setConfirmPassword] = useState(null);
+
+
     return (
         <View style={styles.container}>
             <TextInput
                 style={styles.input}
-                onChangeText={onChangeLogin}
-                value={login}
+                onChangeText={setFirstName}
+                value={firstName}
                 placeholder="Username"
             />
             <TextInput
                 style={styles.input}
-                onChangeText={onChangeLogin}
-                value={login}
+                onChangeText={setEmail}
+                value={email}
                 placeholder="Email"
             />
             <TextInput
                 style={styles.input}
-                onChangeText={onChangeLogin}
-                value={login}
+                onChangeText={setPassword}
+                value={password}
                 placeholder="Password"
             />
             <TextInput
                 style={styles.input}
-                onChangeText={onChangePassword}
-                value={password}
+                onChangeText={setConfirmPassword}
+                value={confirmPassword}
                 placeholder="Confirm Password"
             />
-            <Button
-                title="Login"
-                onPress={}
-            />
+            <TouchableOpacity
+                title="Register"
+                onPress={() => console.log('register')}
+            >
+                <Text>Sign Up</Text>
+            </TouchableOpacity>
         </View>
     );
 }
