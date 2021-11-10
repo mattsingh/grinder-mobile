@@ -1,29 +1,19 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MatchScreen from './MatchScreen';
 import ProfileScreen from './ProfileScreen';
-import MessageStack from '../routes/MessageStack'
+import MessageStack from '../routes/MessageStack';
 
 const Tab = createBottomTabNavigator();
 
-function MyTabs() {
+export default function HomeScreen() {
 	return (
 		<Tab.Navigator screenOptions={{ headerShown: false }}>
 			<Tab.Screen name='Match' component={MatchScreen} />
 			<Tab.Screen name='Chats' component={MessageStack} />
 			<Tab.Screen name='Profile' component={ProfileScreen} />
 		</Tab.Navigator>
-	);
-}
-export default function HomeScreen() {
-	return (
-		<SafeAreaView style={{ flex: 1, backgroundColor: 'purple' }}>
-			<NavigationContainer>
-				<MyTabs />
-			</NavigationContainer>
-		</SafeAreaView>
 	);
 }
 

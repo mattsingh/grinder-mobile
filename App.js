@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useReducer, useMemo } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet, Text, SafeAreaView } from 'react-native';
+import AuthStack from './routes/AuthStack';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
-import SplashScreen from './screens/HomeScreen';
+import SplashScreen from './screens/SplashScreen';
 import { AuthContext } from './components/context';
 import * as SecureStore from 'expo-secure-store';
 import path from './components/Path';
@@ -45,11 +47,11 @@ export default function App() {
 		() => ({
 			signIn: async (data) => {
 				let token = null;
-				
+
 				// send some data to server and get token
 				try {
 					const res = await axios.post('api/login', {
-						email: data.login,
+						email: data.email,
 						password: data.password,
 					});
 					if (res.data.error) return; // if response has an error message, return
@@ -58,7 +60,7 @@ export default function App() {
 					console.log(err);
 					return;
 				}
-				
+
 				// persist the token using secure store
 				try {
 					await SecureStore.setItemAsync('userToken', token);
@@ -81,7 +83,7 @@ export default function App() {
 
 				dispatch({
 					type: 'SIGN_OUT',
-				})
+				});
 			},
 			signUp: async (data) => {
 				// send user data to server and get token
@@ -125,9 +127,11 @@ export default function App() {
 	}
 
 	return (
-		<AuthContext.Provider value={authContext}>
-			{state.userToken == null ? <LoginScreen /> : <HomeScreen />}
-		</AuthContext.Provider>
+		<NavigationContainer>
+			<AuthContext.Provider value={authContext}>
+				{state.userToken == null ? <AuthStack /> : <HomeScreen />}
+			</AuthContext.Provider>
+		</NavigationContainer>
 	);
 }
 
