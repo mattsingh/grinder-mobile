@@ -13,6 +13,7 @@ import {
 	FormButton,
 	FormText,
 } from '../components/FormComponents';
+import AppGradient from '../components/AppGradient';
 
 export default function LoginScreen({ navigation }) {
 	const [email, setEmail] = useState(null);
@@ -21,7 +22,7 @@ export default function LoginScreen({ navigation }) {
 	const { signIn } = useContext(AuthContext);
 
 	return (
-		<View style={styles.container}>
+		<AppGradient>
 			<FormCard>
 				<FormText text='Please sign in' />
 				<FormInput
@@ -44,10 +45,9 @@ export default function LoginScreen({ navigation }) {
 				<FormButton
 					buttonTitle='Register'
 					onPress={() => navigation.navigate('Register')}
-
 				/>
 			</FormCard>
-		</View>
+		</AppGradient>
 	);
 }
 

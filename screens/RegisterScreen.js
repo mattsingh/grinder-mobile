@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import AppStyles from '../assets/colors';
 import { FormCard, FormButton, FormInput, FormText } from '../components/FormComponents';
+import AppGradient from '../components/AppGradient';
 
 export default function RegisterScreen() {
 	const [firstName, setFirstName] = useState(null);
@@ -16,7 +17,7 @@ export default function RegisterScreen() {
 	const [confirmPassword, setConfirmPassword] = useState(null);
 
 	return (
-		<View style={styles.container}>
+		<AppGradient>
 			<FormCard>
                 <FormText text='Create an account' />
 				<FormInput
@@ -44,7 +45,7 @@ export default function RegisterScreen() {
 					onPress={() => console.log('register')}
 				/>
 			</FormCard>
-		</View>
+		</AppGradient>
 	);
 }
 
