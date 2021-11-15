@@ -7,7 +7,12 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 import AppStyles from '../assets/colors';
-import { FormCard, FormButton, FormInput, FormText } from '../components/FormComponents';
+import {
+	FormCard,
+	FormButton,
+	FormInput,
+	FormText,
+} from '../components/FormComponents';
 import { AuthContext } from '../components/context';
 import AppGradient from '../components/AppGradient';
 
@@ -32,16 +37,19 @@ export default function RegisterScreen() {
 					onChangeText={setEmail}
 					value={email}
 					placeholder='Email'
+					keyboardType='email-address'
 				/>
 				<FormInput
 					onChangeText={setPassword}
 					value={password}
 					placeholder='Password'
+					secureTextEntry={true}
 				/>
 				<FormInput
 					onChangeText={setConfirmPassword}
 					value={confirmPassword}
 					placeholder='Confirm Password'
+					secureTextEntry={true}
 				/>
 				<FormButton
 					buttonTitle='Register'

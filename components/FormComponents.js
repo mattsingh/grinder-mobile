@@ -12,6 +12,7 @@ export function FormInput({ ...rest }) {
 		<TextInput
 			style={styles.formInput}
 			placeholderTextColor='#757575'
+			autoCapitalize='none'
 			{...rest}
 		/>
 	);

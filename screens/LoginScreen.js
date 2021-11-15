@@ -29,11 +29,13 @@ export default function LoginScreen({ navigation }) {
 					placeholder='Email'
 					onChangeText={setEmail}
 					value={email}
+					keyboardType='email-address'
 				/>
 				<FormInput
 					placeholder='Password'
 					onChangeText={setPassword}
 					value={password}
+					secureTextEntry={true}
 				/>
 				<FormButton
 					buttonTitle='Login'
