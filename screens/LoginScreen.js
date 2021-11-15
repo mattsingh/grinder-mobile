@@ -7,7 +7,13 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 import { AuthContext } from '../components/context';
-import AppStyles from '../assets/styles/AppStyles';
+import {
+	FormCard,
+	FormInput,
+	FormButton,
+	FormText,
+} from '../components/FormComponents';
+import AppGradient from '../components/AppGradient';
 
 export default function LoginScreen({ navigation }) {
 	const [email, setEmail] = useState(null);
@@ -16,43 +22,32 @@ export default function LoginScreen({ navigation }) {
 	const { signIn } = useContext(AuthContext);
 
 	return (
-		<View style={styles.container}>
-			<View style={AppStyles.loginCard}>
-				<Text style={AppStyles.loginPageText}>Please sign in</Text>
-				<TextInput
-					style={AppStyles.loginPageInputs}
+		<AppGradient>
+			<FormCard>
+				<FormText text='Please sign in' />
+				<FormInput
+					placeholder='Email'
 					onChangeText={setEmail}
 					value={email}
-					placeholder='Email'
-					placeholderTextColor='#757575'
 				/>
-				<TextInput
-					style={AppStyles.loginPageInputs}
+				<FormInput
+					placeholder='Password'
 					onChangeText={setPassword}
 					value={password}
-					secureTextEntry
-					placeholder='Password'
-					placeholderTextColor='#757575'
 				/>
-				<TouchableOpacity
-					title='Login'
-					style={AppStyles.loginPageButtons}
+				<FormButton
+					buttonTitle='Login'
 					onPress={() => {
 						console.log(email + ' ' + password);
 						signIn({ email, password });
 					}}
-				>
-					<Text style={AppStyles.loginPageText}>Login</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					title='Register'
-					style={AppStyles.loginPageButtons}
+				/>
+				<FormButton
+					buttonTitle='Register'
 					onPress={() => navigation.navigate('Register')}
-				>
-					<Text style={AppStyles.loginPageText}>Register</Text>
-				</TouchableOpacity>
-			</View>
-		</View>
+				/>
+			</FormCard>
+		</AppGradient>
 	);
 }
 
