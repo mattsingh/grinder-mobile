@@ -10,7 +10,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 
 export default function AppGradient({ ...rest }) {
-	console.log({...rest});
 	return (
 		<LinearGradient
 			style={styles.container}

@@ -8,21 +8,24 @@ import {
 } from 'react-native';
 import AppStyles from '../assets/colors';
 import { FormCard, FormButton, FormInput, FormText } from '../components/FormComponents';
+import { AuthContext } from '../components/context';
 import AppGradient from '../components/AppGradient';
 
 export default function RegisterScreen() {
-	const [firstName, setFirstName] = useState(null);
+	const [name, setName] = useState(null);
 	const [email, setEmail] = useState(null);
 	const [password, setPassword] = useState(null);
 	const [confirmPassword, setConfirmPassword] = useState(null);
 
+	const { signUp } = useContext(AuthContext);
+
 	return (
 		<AppGradient>
 			<FormCard>
-                <FormText text='Create an account' />
+				<FormText text='Create an account' />
 				<FormInput
-					onChangeText={setFirstName}
-					value={firstName}
+					onChangeText={setName}
+					value={name}
 					placeholder='Username'
 				/>
 				<FormInput
@@ -41,8 +44,11 @@ export default function RegisterScreen() {
 					placeholder='Confirm Password'
 				/>
 				<FormButton
-                    buttonTitle='Register'
-					onPress={() => console.log('register')}
+					buttonTitle='Register'
+					onPress={() => {
+						console.log('register');
+						signUp({ name, email, password, confirmPassword });
+					}}
 				/>
 			</FormCard>
 		</AppGradient>

@@ -1,0 +1,25 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-grindermobile-dev-161141-authRole",
+      "UnauthRoleArn": "arn:aws:iam::114172780249:role/amplify-grindermobile-dev-161141-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::114172780249:role/amplify-grindermobile-dev-161141-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-grindermobile-dev-161141-deployment",
+      "UnauthRoleName": "amplify-grindermobile-dev-161141-unauthRole",
+      "StackName": "amplify-grindermobile-dev-161141",
+      "StackId": "arn:aws:cloudformation:us-east-2:114172780249:stack/amplify-grindermobile-dev-161141/a5b0b350-4658-11ec-a7dd-02f14f461a96",
+      "AmplifyAppId": "d1iwkcpmfsiq9u"
+    },
+    "categories": {
+      "auth": {
+        "grindermobilea0d524ad": {
+          "userPoolId": "us-east-2_34v9YRHja",
+          "userPoolName": "Grinder Social App",
+          "webClientId": "7g9lb8lj0jvgdnrpv495fbmjo8",
+          "nativeClientId": "7g9lb8lj0jvgdnrpv495fbmjo8"
+        }
+      }
+    }
+  }
+}

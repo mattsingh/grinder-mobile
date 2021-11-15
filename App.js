@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useReducer, useMemo } from 'react';
+import Amplify, { Auth } from 'aws-amplify';
+import config from './src/aws-exports';
+Amplify.configure(config);
 import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet, Text, SafeAreaView } from 'react-native';
 import AuthStack from './routes/AuthStack';
@@ -48,6 +51,16 @@ export default function App() {
 			signIn: async (data) => {
 				let token = null;
 
+				try {
+					const user = await Auth.signIn({
+						username: data.email,
+						password: data.password,
+					});
+				} catch (error) {
+					console.log('error signing in', error);
+					return;
+				}
+
 				// send some data to server and get token
 				try {
 					const res = await axios.post('api/login', {
@@ -74,11 +87,12 @@ export default function App() {
 					token: token,
 				});
 			},
-			signOut: () => {
+			signOut: async () => {
 				try {
+					await Auth.signOut(); // idk why I need this
 					SecureStore.deleteItemAsync('userToken');
-				} catch (err) {
-					console.log(err);
+				} catch (error) {
+					console.log('error signing out: ', error);
 				}
 
 				dispatch({
@@ -86,13 +100,49 @@ export default function App() {
 				});
 			},
 			signUp: async (data) => {
+				if (data.password != data.confirmPassword) {
+					console.log('passwords do not match');
+					return;
+				}
+
 				// send user data to server and get token
-				// handle errors
-				// persist token using securestore
+				try {
+					const { user } = await Auth.signUp({
+						username: data.email,
+						password: data.password,
+						attributes: {
+							name: data.name,
+						},
+					});
+				} catch (error) {
+					console.log('error signing up:', error);
+					return;
+				}
+
+				try {
+					const res = await axios.post('api/signup', {
+						firstname: data.name,
+						email: data.email,
+						password: data.password,
+					});
+					if (res.data.error) return; // if response has an error message, return
+					token = res.data.accessToken;
+				} catch (err) {
+					console.log(err);
+					return;
+				}
+
+				// persist the token using secure store
+				try {
+					await SecureStore.setItemAsync('userToken', token);
+				} catch (err) {
+					console.log(err);
+					return;
+				}
 
 				dispatch({
 					type: 'SIGN_IN',
-					token: 'sample_token',
+					token: token,
 				});
 			},
 		}),
