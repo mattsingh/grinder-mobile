@@ -9,7 +9,7 @@ import {
 	Image,
 } from 'react-native';
 import ChatScreen from './ChatScreen';
-import { getConversations, getMessages, getProfile } from '../components/APIFunctions';
+import { getConversations, getMessages, getProfile, getUserId } from '../components/APIFunctions';
 
 const chats = [
 	// sample list of chats
@@ -67,10 +67,14 @@ export default function MessagesScreen({ navigation }) {
 		async function updateConversations() {
 			const convos = await getConversations();
 			const newConvos = await Promise.all(convos.map(async (item) => {
-				const profile = await getProfile(item.users[1]);
+				const sender = await getUserId();
+				const reciever = item.users[0] == sender ? item.users[1] : item.users[0]
+				const profile = await getProfile(reciever);
 				return {
 					id: item._id,
 					userName: profile.Gamertag,
+					senderId: sender,
+					recieverId: reciever,
 					postTime: '5 mins ago',
 					messageText: 'seminole'
 				};
@@ -78,10 +82,8 @@ export default function MessagesScreen({ navigation }) {
 			setChats(newConvos);
 		}
 
-		setTimeout(() => {
-			updateConversations();
-		}, 3000); // wait 3 seconds and update conversations
-	}, [chats]); // when 'chats' changes, call function in useEffect again
+		updateConversations();
+	}, [chats]);
 	return (
 		<View style={styles.container}>
 			<FlatList
@@ -92,7 +94,9 @@ export default function MessagesScreen({ navigation }) {
 						style={styles.card}
 						onPress={() =>
 							navigation.navigate('Chat', {
-								id: item.id,
+								id: item.id, // chat ID
+								senderId: item.senderId,
+								recieverId: item.recieverId,
 								userName: item.userName,
 							})
 						}

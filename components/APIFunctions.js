@@ -29,3 +29,21 @@ export async function getProfile(userId) {
 	// console.log(res.data.Profile);
 	return res.data.Profile;
 }
+
+export async function sendMessage(body) {
+	let userToken = await SecureStore.getItemAsync('userToken');
+	let res = await axios.post('api/message', {
+		conversationId: body.conversationId,
+		sender: body.sender,
+		text: body.text,
+	}, {
+		headers: { Authorization: userToken },
+	});
+	return res.data.Profile;
+}
+
+export async function getUserId() {
+	let userToken = await SecureStore.getItemAsync('userToken');
+	let userId = jwt_decode(userToken).id;
+	return userId;
+}
