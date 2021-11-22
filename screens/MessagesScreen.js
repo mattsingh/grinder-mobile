@@ -16,6 +16,7 @@ import {
 	getUserId,
 } from '../components/APIFunctions';
 import { useFocusEffect } from '@react-navigation/native';
+import { timeSince, truncateMessage } from '../components/ChatFunctions';
 
 function renderMessageList({ item }) {
 	return (
@@ -59,13 +60,17 @@ export default function MessagesScreen({ navigation }) {
 								? item.users[1]
 								: item.users[0];
 						const profile = await getProfile(reciever);
+						const messages = await getMessages(item._id);
+						const latestMessageText = truncateMessage(messages[messages.length - 1].text); // truncate last message
+						const latestMessageTime = messages[messages.length - 1].createdAt;
+						const postTime = timeSince(latestMessageTime);
 						return {
 							id: item._id,
 							userName: profile.Gamertag,
 							senderId: sender,
 							recieverId: reciever,
-							postTime: '5 mins ago',
-							messageText: 'seminole',
+							postTime: postTime,
+							messageText: latestMessageText,
 						};
 					})
 				);
