@@ -1,5 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
 	StyleSheet,
 	View,
@@ -9,29 +9,13 @@ import {
 	Image,
 } from 'react-native';
 import ChatScreen from './ChatScreen';
-import { getConversations, getMessages, getProfile, getUserId } from '../components/APIFunctions';
-
-const chats = [
-	// sample list of chats
-	{
-		id: 1,
-		userName: 'Hippie Overlord',
-		postTime: '5 mins ago',
-		messageText: 'I have aids',
-	},
-	{
-		id: 2,
-		userName: 'Cristianplays',
-		postTime: '1 hour ago',
-		messageText: 'grapes',
-	},
-	{
-		id: 3,
-		userName: 'Djinn',
-		postTime: '2 hours ago',
-		messageText: 'Want to play CS:GO?',
-	},
-];
+import {
+	getConversations,
+	getMessages,
+	getProfile,
+	getUserId,
+} from '../components/APIFunctions';
+import { useFocusEffect } from '@react-navigation/native';
 
 function renderMessageList({ item }) {
 	return (
@@ -63,27 +47,34 @@ function renderMessageList({ item }) {
 
 export default function MessagesScreen({ navigation }) {
 	const [chats, setChats] = useState([]);
-	useEffect(() => {
-		async function updateConversations() {
-			const convos = await getConversations();
-			const newConvos = await Promise.all(convos.map(async (item) => {
-				const sender = await getUserId();
-				const reciever = item.users[0] == sender ? item.users[1] : item.users[0];
-				const profile = await getProfile(reciever);
-				return {
-					id: item._id,
-					userName: profile.Gamertag,
-					senderId: sender,
-					recieverId: reciever,
-					postTime: '5 mins ago',
-					messageText: 'seminole'
-				};
-			}));
-			setChats(newConvos);
-		}
+	useFocusEffect(
+		useCallback(() => {
+			async function updateConversations() {
+				const convos = await getConversations();
+				const newConvos = await Promise.all(
+					convos.map(async (item) => {
+						const sender = await getUserId();
+						const reciever =
+							item.users[0] == sender
+								? item.users[1]
+								: item.users[0];
+						const profile = await getProfile(reciever);
+						return {
+							id: item._id,
+							userName: profile.Gamertag,
+							senderId: sender,
+							recieverId: reciever,
+							postTime: '5 mins ago',
+							messageText: 'seminole',
+						};
+					})
+				);
+				setChats(newConvos);
+			}
 
-		updateConversations();
-	}, [chats]);
+			updateConversations();
+		}, [chats])
+	);
 	return (
 		<View style={styles.container}>
 			<FlatList
