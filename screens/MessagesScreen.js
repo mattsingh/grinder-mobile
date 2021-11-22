@@ -68,7 +68,7 @@ export default function MessagesScreen({ navigation }) {
 			const convos = await getConversations();
 			const newConvos = await Promise.all(convos.map(async (item) => {
 				const sender = await getUserId();
-				const reciever = item.users[0] == sender ? item.users[1] : item.users[0]
+				const reciever = item.users[0] == sender ? item.users[1] : item.users[0];
 				const profile = await getProfile(reciever);
 				return {
 					id: item._id,
