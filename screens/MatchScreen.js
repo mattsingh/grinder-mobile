@@ -3,10 +3,11 @@ import { StyleSheet, View, Text } from 'react-native';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
 import CardItem from '../components/CardItem';
 import demo from '../assets/demo';
+import AppGradient from '../components/AppGradient';
 
 export default function MatchScreen() {
 	return (
-		<View style={styles.container}>
+		<AppGradient>
 			<CardStack
 				style={styles.cardStack}
 				loop={false}
@@ -28,17 +29,11 @@ export default function MatchScreen() {
 					</Card>
 				))}
 			</CardStack>
-		</View>
+		</AppGradient>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: 'purple',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
 	cardStack: {
 		flex: 1,
 		marginHorizontal: 10,
