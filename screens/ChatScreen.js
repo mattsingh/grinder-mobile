@@ -33,9 +33,6 @@ export default function ChatScreen(params) {
 	);
 
 	const onSend = useCallback((messages = []) => {
-		setMessages((previousMessages) =>
-			GiftedChat.append(previousMessages, messages)
-		);
 		let formattedMessage = messages.map((item) => ({
 			conversationId: params.route.params.id,
 			sender: params.route.params.senderId,
