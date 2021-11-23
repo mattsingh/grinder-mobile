@@ -61,6 +61,16 @@ export default function MessagesScreen({ navigation }) {
 								: item.users[0];
 						const profile = await getProfile(reciever);
 						const messages = await getMessages(item._id);
+						if (!messages.length) {
+							return {
+								id: item._id,
+								userName: profile.Gamertag,
+								senderId: sender,
+								recieverId: reciever,
+								postTime: 'None',
+								messageText: 'None',
+							}
+						}
 						const latestMessageText = truncateMessage(messages[messages.length - 1].text); // truncate last message
 						const latestMessageTime = messages[messages.length - 1].createdAt;
 						const postTime = timeSince(latestMessageTime);
