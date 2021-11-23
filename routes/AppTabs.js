@@ -1,14 +1,13 @@
 import React from 'react';
-import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MatchScreen from './MatchScreen';
-import ProfileScreen from './ProfileScreen';
-import MessageStack from '../routes/MessageStack';
+import MatchScreen from '../screens/MatchScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import MessageStack from './MessageStack';
 import { FontAwesome, Entypo } from 'react-native-vector-icons';
 
 const Tab = createBottomTabNavigator();
 
-export default function HomeScreen() {
+export default function AppTabs() {
 	return (
 		<Tab.Navigator screenOptions={{ headerShown: false }}>
 			<Tab.Screen
@@ -41,12 +40,3 @@ export default function HomeScreen() {
 		</Tab.Navigator>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-});

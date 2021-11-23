@@ -5,8 +5,7 @@ Amplify.configure(config);
 import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet, Text, SafeAreaView } from 'react-native';
 import AuthStack from './routes/AuthStack';
-import LoginScreen from './screens/LoginScreen';
-import HomeScreen from './screens/HomeScreen';
+import AppTabs from './routes/AppTabs';
 import SplashScreen from './screens/SplashScreen';
 import { AuthContext } from './components/context';
 import * as SecureStore from 'expo-secure-store';
@@ -179,7 +178,7 @@ export default function App() {
 	return (
 		<NavigationContainer>
 			<AuthContext.Provider value={authContext}>
-				{state.userToken == null ? <AuthStack /> : <HomeScreen />}
+				{state.userToken == null ? <AuthStack /> : <AppTabs />}
 			</AuthContext.Provider>
 		</NavigationContainer>
 	);
