@@ -1,11 +1,33 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
 import CardItem from '../components/CardItem';
-import demo from '../assets/demo';
 import AppGradient from '../components/AppGradient';
+import { useFocusEffect } from '@react-navigation/native';
+import { dislike, getPotentialMatches, like } from '../components/APIFunctions';
 
 export default function MatchScreen() {
+	const [cardList, setCardList] = useState([]);
+	const [refresh, setRefresh] = useState(false);
+
+	useFocusEffect(
+		useCallback(() => {
+			async function updateCards() {
+				const matchList = await getPotentialMatches();
+				const formattedMatchList = await matchList.map((item) => {
+					return {
+						id: item._id,
+						name: item.Profile.Gamertag,
+						description: item.Profile.Bio,
+						image: item.Profile.ProfilePicture,
+					};
+				});
+				setCardList(formattedMatchList);
+			}
+			updateCards();
+		}, [refresh])
+	);
+
 	return (
 		<AppGradient>
 			<CardStack
@@ -14,14 +36,26 @@ export default function MatchScreen() {
 				verticalSwipe={false}
 				renderNoMoreCards={() => null}
 				ref={swiper => { this.swiper = swiper }}
+				onSwipedLeft={(index) => {
+					console.log('dislike ' + cardList[index].name);
+					dislike(cardList[index].id);
+				}}
+				onSwipedRight={(index) => {
+					console.log('like ' + cardList[index].name);
+					like(cardList[index].id);
+
+				}}
+				onSwipedAll={() => {
+					console.log('Refreshing cards');
+					setRefresh(!refresh);
+				}}
 			>
-				{demo.map((item, index) => (
+				{cardList.map((item, index) => (
 					<Card key={index}>
 						<CardItem
-							// image={item.image}
 							name={item.name}
 							description={item.description}
-							matches={item.match}
+							image={item.image}
 							actions
 							onPressLeft={() => this.swiper.swipeLeft()}
 							onPressRight={() => this.swiper.swipeRight()}

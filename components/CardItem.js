@@ -13,7 +13,6 @@ export default function CardItem({
 	actions,
 	description,
 	image,
-	matches,
 	name,
 	onPressLeft,
 	onPressRight,
@@ -43,36 +42,13 @@ export default function CardItem({
 	return (
 		<View style={styles.containerCardItem}>
 			{/* IMAGE */}
-			<Image source={image} style={imageStyle} />
-
-			{/* MATCHES */}
-			{matches && (
-				<View style={styles.matchesCardItem}>
-					<Text style={styles.matchesTextCardItem}>
-						<Icon name='heart' /> {matches}% Match!
-					</Text>
-				</View>
-			)}
+			<Image source={image ? {uri: `data:image/png;base64,${image}`} : require('../assets/images/default-pfp.png')} style={imageStyle} />
 
 			{/* NAME */}
 			<Text style={nameStyle}>{name}</Text>
 
 			{/* DESCRIPTION */}
-			{description && (
-				<Text style={styles.descriptionCardItem}>{description}</Text>
-			)}
-
-			{/* STATUS */}
-			{status && (
-				<View style={styles.status}>
-					<View
-						style={
-							status === 'Online' ? styles.online : styles.offline
-						}
-					/>
-					<Text style={styles.statusText}>{status}</Text>
-				</View>
-			)}
+			<Text style={styles.descriptionCardItem}>{description}</Text>
 
 			{/* ACTIONS */}
 			{actions && (

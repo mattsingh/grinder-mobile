@@ -47,3 +47,31 @@ export async function getUserId() {
 	let userId = jwt_decode(userToken).id;
 	return userId;
 }
+
+export async function getPotentialMatches() {
+	let userToken = await SecureStore.getItemAsync('userToken');
+	let res = await axios.get('api/getNextUser', {
+		headers: { Authorization: userToken },
+	});
+	return res.data;
+}
+
+export async function like(userId) {
+	let userToken = await SecureStore.getItemAsync('userToken');
+	let res = await axios.put('api/like', {
+		userId: userId,
+	}, {
+		headers: { Authorization: userToken },
+	});
+	return res.data;
+}
+
+export async function dislike(userId) {
+	let userToken = await SecureStore.getItemAsync('userToken');
+	let res = await axios.put('api/dislike', {
+		userId: userId,
+	}, {
+		headers: { Authorization: userToken },
+	});
+	return res.data;
+}
