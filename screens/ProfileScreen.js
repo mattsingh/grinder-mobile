@@ -32,7 +32,7 @@ export default function ProfileScreen() {
 
 	return (
 		<AppGradient style={styles.container}>
-			<SafeAreaView>
+			<SafeAreaView style={{flex: 1, width: '100%'}}>
 				<ScrollView>
 					<Image
 						source={
@@ -48,12 +48,19 @@ export default function ProfileScreen() {
 					<Text style={styles.userAgeText}>
 						{'Age: ' + profile.Age}
 					</Text>
-					<FormCard>
-						<View>
+					<View style={styles.infoCard}>
+						<View
+							style={{
+								borderBottomColor: 'white',
+								borderBottomWidth: 2,
+								width: '100%',
+								paddingBottom: 10,
+							}}
+						>
 							<Text style={styles.formHeader}>Bio: </Text>
 							<Text style={styles.formText}>{profile.Bio}</Text>
 						</View>
-						<View style={{paddingTop: 15}}>
+						<View style={{ paddingTop: 15 }}>
 							<Text style={styles.formHeader}>Genres: </Text>
 							<Text style={styles.formText}>
 								{profile.Favgenre
@@ -61,7 +68,7 @@ export default function ProfileScreen() {
 									: profile.Favgenre}
 							</Text>
 						</View>
-					</FormCard>
+					</View>
 					<FormButton
 						buttonTitle='Edit Profile'
 						onPress={async () => {
@@ -117,6 +124,23 @@ const styles = StyleSheet.create({
 	formText: {
 		fontSize: 15,
 		color: 'white',
-		textAlign: 'center',
+		textAlign: 'left',
+	},
+	infoCard: {
+		borderWidth: 1,
+		borderColor: '#3498db',
+		borderStyle: 'solid',
+		paddingTop: 10,
+		paddingRight: 50,
+		paddingBottom: 10,
+		paddingLeft: 50,
+		width: '100%',
+		maxWidth: 330,
+		padding: 15,
+		margin: 'auto',
+		backgroundColor: '#242121',
+		borderRadius: 30,
+		alignItems: 'center',
+		alignSelf: 'center'
 	},
 });
