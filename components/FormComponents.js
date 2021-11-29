@@ -40,6 +40,7 @@ export function FormText({ text, ...rest }) {
 
 const styles = StyleSheet.create({
 	formButton: {
+		backgroundColor: '#242121',
 		borderWidth: 1,
 		borderColor: '#2ecc71',
 		borderStyle: 'solid',
