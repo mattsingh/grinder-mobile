@@ -1,8 +1,16 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
+import AppGradient from '../components/AppGradient';
 
 export default function SplashScreen() {
-	return <View style={styles.container} />;
+	return (
+	<AppGradient>
+		<Image
+			source={require('../assets/images/app-logo.png')}
+			style={{width: 300, height: 300}}
+		/>
+	</AppGradient>
+	);
 }
 
 const styles = StyleSheet.create({
