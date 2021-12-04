@@ -65,6 +65,7 @@ export default function MessagesScreen({ navigation }) {
 							return {
 								id: item._id,
 								userName: profile.Gamertag,
+								pfp: profile.ProfilePicture,
 								senderId: sender,
 								recieverId: reciever,
 								postTime: 'None',
@@ -77,6 +78,7 @@ export default function MessagesScreen({ navigation }) {
 						return {
 							id: item._id,
 							userName: profile.Gamertag,
+							pfp: profile.ProfilePicture,
 							senderId: sender,
 							recieverId: reciever,
 							postTime: postTime,
@@ -111,7 +113,7 @@ export default function MessagesScreen({ navigation }) {
 							<View style={styles.userImgWrapper}>
 								<Image
 									style={styles.userImage}
-									source={require('../assets/images/default-pfp.png')}
+									source={item.pfp ? {uri: `data:image/png;base64,${item.pfp}`} : require('../assets/images/default-pfp.png')}
 									defaultSource={require('../assets/images/default-pfp.png')}
 								/>
 							</View>
